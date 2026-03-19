@@ -50,7 +50,7 @@ You can either follow the documentation of tcrdock or use our branch of the [nf-
 
 Clone the repository and checkout to the tcrdock branch
 1.  ``` git clone https://github.com/mapo9/nf-core_proteinfold ```
-2. ``` git checkout -b tcrdock ```
+2. ``` git checkout tcrdock ```
 
 See the [documentation](https://github.com/mapo9/nf-core_proteinfold/tree/tcrdock) to create the docker container and run the pipeline.
 
