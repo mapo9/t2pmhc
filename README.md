@@ -173,4 +173,4 @@ If you use t2pmhc, please cite the article as follows:
 
 > **t2pmhc: A Structure-Informed Graph Neural Network to Predict TCR-pMHC Binding**
 >
-> Mark Polster, Josua Stadelmaier, Elias Ball, Jonas Scheid, Jens Bauer, Annika Nelde, Manfred Claassen. Marissa Dubbelaar, Juliane S. Walz, Sven Nahnsen. *bioRxiv* (2026): 2026-02. doi: [https://doi.org/10.64898/2026.02.27.708137](https://doi.org/10.64898/2026.02.27.708137).
+> Mark Polster, Josua Stadelmaier, Elias Ball, Jonas Scheid, Jens Bauer, Annika Nelde, Manfred Claassen, Marissa Dubbelaar, Juliane S. Walz, Sven Nahnsen. *bioRxiv* (2026): 2026-02. doi: [https://doi.org/10.64898/2026.02.27.708137](https://doi.org/10.64898/2026.02.27.708137).
