@@ -101,17 +101,21 @@ human	1	A*02:01	YLQPRTFLL	TRAV12-2*01	TRAJ30*01	CAVNRDDKIIF	TRBV7-9*01	TRBJ2-7*0
 | `model_2_ptm_pae` | PAE of the complex (provided by TCRdock). |
 | `pmhc_tcr_pae` | TCR-pMHC specific PAE value (provided by TCRdock). |
 | `target_chainseq` | Full sequence of the complex (MHC/peptide/TCRA/TCRB) (provided by TCRdock). |
-| `pdb_file_path` | Path to the PDB file created by TCRdock. |
+| `pdb_file_path` | Path to the PDB file created by TCRdock. (must have _\<LABEL>.pdb suffix if used for training (LABEL=0/1)) |
 <br>
-> The TCRDock pipeline produces `npy` files containing the PAEs, named after their respective PDB files with the suffix `_predicted_aligned_error.npy`. These files must reside in the same directory as the PDB files.
 
+> The TCRDock pipeline produces `npy` files containing the PAEs, named after their respective PDB files with the suffix `_predicted_aligned_error.npy`. These files must reside in the same directory as the PDB files. If training mode is activated, the label must be present before this suffix.
+
+> If the graphs are created for training (--training-mode), the PDB files must have the binder status (LABEL) as suffix (e.g. sample01_0.pdb)
 <br>
+
 To create the graphs expected by the models from the pdb files, you can run the following command:
 
 ```
 t2pmhc create-t2pmhc-graphs \
-    --mode <tpmhc-gcn,t2pmhc-gat> \
+    --mode <t2pmhc-gcn,t2pmhc-gat> \
     --samplesheet samplesheet.tsv \
+    --training-mode / --prediction-mode \
     --out <path/to/graphs.pt> \
 ```
 
