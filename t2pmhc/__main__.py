@@ -204,13 +204,19 @@ def train_t2pmhc_gat(samplesheet, run_name, hyperparameters, saved_graphs, save_
 )
 
 @click.option(
+    '--training-mode/--prediction-mode',
+    required=True,
+    help="Use --training-mode when PDB files have label suffixes (_0/_1), --prediction-mode otherwise (no training should happen on graphs)."
+)
+
+@click.option(
     '--out',
     type=str,
     required=True,
     help="Path to store the graphs-file"
 )
 
-def create_t2pmhc_graphs(mode, samplesheet, out):
+def create_t2pmhc_graphs(mode, samplesheet, training_mode, out):
     """
     Build t2pmhc graphs from pdb files
     """
@@ -218,6 +224,7 @@ def create_t2pmhc_graphs(mode, samplesheet, out):
     logging.info(f"........ Building {mode} graphs ........")
     create_graphs(mode,
               samplesheet,
+              training_mode,
               out
                 )       
 
