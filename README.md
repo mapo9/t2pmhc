@@ -43,10 +43,9 @@ Now you can use *t2pmhc* anywhere on your machine.
 ## Create pdb files
 
 t2pmhc currently supports pdb files created with [TCRdock](https://github.com/phbradley/TCRdock).  
-You can either follow the documentation of tcrdock or use our branch of the [nf-core/proteinfold](https://github.com/nf-core/proteinfold/) pipeline
+To predict TCR-pMHC structures with TCRdock you can use our branch of the [nf-core/proteinfold](https://github.com/nf-core/proteinfold/) pipeline
 
 ### TCRDock in nf-core proteinfold
-
 
 Clone the repository and checkout to the tcrdock branch
 1.  ``` git clone https://github.com/mapo9/nf-core_proteinfold ```
@@ -59,7 +58,7 @@ Minimal samplesheet:
 ```console
 organism,mhc_class,mhc,peptide,va,ja,cdr3a,vb,jb,cdr3b,identifier
 human,1,A*02:01:48,RLQSLQTYV,TRAV16*01,TRAJ39*01,CALSGFNNAGNMLTF,TRBV11-2*01,TRBJ2-3*01,CASSLGGAGGADTQYF,a2341ad
-human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-7*01,CASSPDIEQYF,a2341ad
+human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-7*01,CASSPDIEQYF,223dse2
 ```
 
 | Column | Description |
@@ -77,15 +76,13 @@ human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-
 | `identifier` | Unique sample identifier. |
 
 ## Create t2pmhc graphs
-
-To create the graphs expected by the models from the pdb files, you can run the following command:
 t2pmhc expects TCRdock output as input for the graph generation step.
 Minimal samplesheet:  
 
 ```console
-organism,mhc_class,mhc,peptide,va,ja,cdr3a,vb,jb,cdr3b,identifier,model_2_ptm_pae,pmhc_tcr_pae,target_chainseq
-human,1,A*02:01:48,RLQSLQTYV,TRAV16*01,TRAJ39*01,CALSGFNNAGNMLTF,TRBV11-2*01,TRBJ2-3*01,CASSLGGAGGADTQYF,1sr34,2.43,6.24,CALSGFNNAGNMLTF/RLQSLQTYV/CASSLGGAGGADTQYF
-human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-7*01,CASSPDIEQYF,223dse2,4.5,7.2,YLQPRTFLL/CAVNRDDKIIF/CASSPDIEQYF
+organism	mhc_class	mhc	peptide	va	ja	cdr3a	vb	jb	cdr3b	identifier	model_2_ptm_pae	pmhc_tcr_pae	target_chainseq pdb_file_path
+human	1	A*02:01 RLQSLQTYV	TRAV16*01	TRAJ39*01	CALSGFNNAGNMLTF	TRBV11-2*01	TRBJ2-3*01	CASSLGGAGGADTQYF	1sr34	2.43	6.24	CALSGFNNAGNMLTF/RLQSLQTYV/CASSLGGAGGADTQYF  path/to/tcrdock/pdb
+human	1	A*02:01	YLQPRTFLL	TRAV12-2*01	TRAJ30*01	CAVNRDDKIIF	TRBV7-9*01	TRBJ2-7*01	CASSPDIEQYF	223dse2	4.5	7.2	YLQPRTFLL/CAVNRDDKIIF/CASSPDIEQYF   path/to/tcrdock/pdb
 ```
 
 | Column | Description |
@@ -104,8 +101,12 @@ human,1,A*02:01:48,YLQPRTFLL,TRAV12-2*01,TRAJ30*01,CAVNRDDKIIF,TRBV7-9*01,TRBJ2-
 | `model_2_ptm_pae` | PAE of the complex (provided by TCRdock). |
 | `pmhc_tcr_pae` | TCR-pMHC specific PAE value (provided by TCRdock). |
 | `target_chainseq` | Full sequence of the complex (MHC/peptide/TCRA/TCRB) (provided by TCRdock). |
+| `pdb_file_path` | Path to the PDB file created by TCRdock. |
+<br>
+> The TCRDock pipeline produces `npy` files containing the PAEs, named after their respective PDB files with the suffix `_predicted_aligned_error.npy`. These files must reside in the same directory as the PDB files.
 
-
+<br>
+To create the graphs expected by the models from the pdb files, you can run the following command:
 
 ```
 t2pmhc create-t2pmhc-graphs \
@@ -121,7 +122,7 @@ t2pmhc create-t2pmhc-graphs \
 ```
 t2pmhc train-t2pmhc-gcn \
     --run_name <name to save model under> \
-    --hyperparameters t2pmhc/data/hyperparams/t2pmhc_gcn.json \
+    --hyperparameters path/to/t2pmhc/t2pmhc/data/hyperparams/t2pmhc_gcn.json \
     --samplesheet samplesheet.tsv \
     --saved_graphs <path/to/graphs.pt> \
     --save_model <path/to/model_dir>
@@ -132,7 +133,7 @@ t2pmhc train-t2pmhc-gcn \
 ```
 t2pmhc train-t2pmhc-gat \
     --run_name <name to save model under> \
-    --hyperparameters t2pmhc/data/hyperparams/t2pmhc_gat.json \
+    --hyperparameters path/to/t2pmhc/t2pmhc/data/hyperparams/t2pmhc_gat.json \
     --samplesheet samplesheet.tsv \
     --saved_graphs <path/to/graphs.pt> \
     --save_model <path/to/model_dir>
