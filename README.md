@@ -106,7 +106,7 @@ human	1	A*02:01	YLQPRTFLL	TRAV12-2*01	TRAJ30*01	CAVNRDDKIIF	TRBV7-9*01	TRBJ2-7*0
 
 > The TCRDock pipeline produces `npy` files containing the PAEs, named after their respective PDB files with the suffix `_predicted_aligned_error.npy`. These files must reside in the same directory as the PDB files. If training mode is activated, the label must be present before this suffix.
 
-> If the graphs are created for training (--training-mode), the PDB files must have the binder status (LABEL) as suffix (e.g. sample01_0.pdb)
+> If the graphs are created for training (--training-mode), the PDB files must have the binder status (LABEL) as suffix (e.g. sample01_0.pdb), same for respective PAE files (e.g. sample01_0_predicted_aligned_error.npy)
 <br>
 
 To create the graphs expected by the models from the pdb files, you can run the following command:
