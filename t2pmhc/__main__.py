@@ -206,7 +206,7 @@ def train_t2pmhc_gat(samplesheet, run_name, hyperparameters, saved_graphs, save_
 @click.option(
     '--training-mode/--prediction-mode',
     required=True,
-    help="Use --training-mode when PDB files have label suffixes (_0/_1), --prediction-mode otherwise"
+    help="Use --training-mode when PDB files have label suffixes (_0/_1), --prediction-mode otherwise (no training should happen on graphs)."
 )
 
 @click.option(
