@@ -8,7 +8,6 @@
    - `--prediction-mode`: assigns dummy labels for prediction graphs
 
  ### Fixed
- - Typo in README CLI example (`tpmhc-gcn` → `t2pmhc-gcn`)
  - Improved README
 
 ## [1.0.1] - Ionic Hleb (2025-21-01)
